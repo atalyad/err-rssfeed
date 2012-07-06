@@ -91,7 +91,7 @@ class RSSFeedPlugin(BotPlugin):
                         self.shelf.sync()
 
         if not self.config:
-            poll_interval = 18.0
+            poll_interval = 1800.0
         else:
             poll_interval = float(self.config.get('POLL_INTERVAL', 1800.0))
 
