@@ -1,0 +1,6 @@
+[Core]
+Name = RSSFeedPlugin
+Module = rss_feed
+
+[Documentation]
+Description = rss feed.
