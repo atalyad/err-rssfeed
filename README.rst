@@ -16,5 +16,5 @@ in order to install the plugin.
 Then !help to see the available commands and their explanation.
 
 **Dependencies**
-
+::
     pip install feedparser
