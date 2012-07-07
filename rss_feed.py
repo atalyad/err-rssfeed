@@ -80,8 +80,8 @@ class RSSFeedPlugin(BotPlugin):
                 item_date = get_item_date(item)
                 if item_date > subscription_tss[name]:
                     subscription_tss[name] = item_date
-                    self.send(CHATROOM_PRESENCE[0], '%s News from %s:\n%s' % (item_date, name, item.summary))
-                    self.send(CHATROOM_PRESENCE[0], str(item.link))
+                    self.send(CHATROOM_PRESENCE[0], '%s News from %s:\n%s' % (item_date, name, item.summary), message_type='groupchat')
+                    self.send(CHATROOM_PRESENCE[0], str(item.link), message_type='groupchat')
                     self['subscriptions_last_ts'] = subscription_tss
                     post_canary = True
             if not post_canary:
@@ -89,6 +89,8 @@ class RSSFeedPlugin(BotPlugin):
 
     def activate(self):
         super(RSSFeedPlugin, self).activate()
+        if not CHATROOM_PRESENCE:
+            raise Exception('You need at least one chatroom configured')
         self.start_poller(self.config['POLL_INTERVAL'] if self.config else DEFAULT_POLL_INTERVAL, self.send_news)
 
     @botcmd(split_args_with=' ')
