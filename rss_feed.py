@@ -1,10 +1,18 @@
 from datetime import datetime
 import logging
-from threading import Timer
+
 from config import CHATROOM_PRESENCE
-from errbot.botplugin import BotPlugin
 from feedparser import parse
-from errbot.jabberbot import botcmd
+
+# Backward compatibility
+from errbot.version import VERSION
+from errbot.utils import version2array
+if version2array(VERSION) >= [1,6,0]:
+    from errbot import botcmd, BotPlugin
+else:
+    from errbot.botplugin import BotPlugin
+    from errbot.jabberbot import botcmd
+
 
 __author__ = 'atalyad'
 
