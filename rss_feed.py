@@ -27,7 +27,7 @@ def get_item_date(rss_item):
                     rss_item.published_parsed.tm_min,
                     rss_item.published_parsed.tm_sec)
 
-DEFAULT_POLL_INTERVAL = 10
+DEFAULT_POLL_INTERVAL = 1800
 
 class RSSFeedPlugin(BotPlugin):
     min_err_version = '1.4.0' # it needs the new polling feature
