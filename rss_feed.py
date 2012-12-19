@@ -162,3 +162,10 @@ class RSSFeedPlugin(BotPlugin):
         self['subscription_names'] = {}
         self['subscriptions_last_ts'] = {}
         return 'all rss feeds were removed'
+
+    @botcmd
+    def rss_news(self, mess, args):
+        """
+        Go through RSS subscriptions, check if there's a new update and send it to the chat.
+        """
+        return self.send_news()
