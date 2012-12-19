@@ -18,3 +18,4 @@ Then !help to see the available commands and their explanation.
 **Dependencies**
 ::
     pip install feedparser
+    pip install beautifulsoup
