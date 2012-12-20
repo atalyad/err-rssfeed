@@ -4,6 +4,8 @@ import logging
 from config import CHATROOM_PRESENCE
 from feedparser import parse
 
+from BeautifulSoup import BeautifulSoup
+
 # Backward compatibility
 from errbot.version import VERSION
 from errbot.utils import version2array
@@ -72,6 +74,11 @@ class RSSFeedPlugin(BotPlugin):
         self['subscription_names'] = subscriptions
         self['subscriptions_last_ts'] = tss
 
+    def clean_html(self, html_item):
+        soup = BeautifulSoup(html_item)
+        text_parts = soup.findAll(text=True)
+        text = ''.join(text_parts)
+        return text
 
     def send_news(self):
         """
@@ -88,8 +95,8 @@ class RSSFeedPlugin(BotPlugin):
                 item_date = get_item_date(item)
                 if item_date > subscription_tss[name]:
                     subscription_tss[name] = item_date
-                    self.send(CHATROOM_PRESENCE[0], '%s News from %s:\n%s' % (item_date, name, item.summary), message_type='groupchat')
-                    self.send(CHATROOM_PRESENCE[0], str(item.link), message_type='groupchat')
+                    self.send(CHATROOM_PRESENCE[0], '%s News from %s:\n%s' % (item_date, name, self.clean_html(item.summary)), message_type='groupchat')
+                    self.send(CHATROOM_PRESENCE[0], '\n%s\n' % str(item.link), message_type='groupchat')
                     self['subscriptions_last_ts'] = subscription_tss
                     post_canary = True
             if not post_canary:
@@ -155,3 +162,10 @@ class RSSFeedPlugin(BotPlugin):
         self['subscription_names'] = {}
         self['subscriptions_last_ts'] = {}
         return 'all rss feeds were removed'
+
+    @botcmd
+    def rss_news(self, mess, args):
+        """
+        Go through RSS subscriptions, check if there's a new update and send it to the chat.
+        """
+        return self.send_news()
