@@ -1,10 +1,14 @@
 from datetime import datetime
 import logging
+import sys
 
 from config import CHATROOM_PRESENCE
 from feedparser import parse
 
-from BeautifulSoup import BeautifulSoup
+if sys.version_info.major <= 2:
+    from BeautifulSoup import BeautifulSoup
+else:
+    from bs4 import BeautifulSoup
 
 # Backward compatibility
 from errbot.version import VERSION

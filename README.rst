@@ -19,3 +19,7 @@ Then !help to see the available commands and their explanation.
 ::
     pip install feedparser
     pip install beautifulsoup
+
+In case of Python 3, you need a slightly different name.
+::
+    pip install beautifulsoup4
